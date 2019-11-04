@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet">
+    <title>Bingo</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+    <h1 class="ticker" id="ticker" style="margin: 0;">00</h1>
+    <table>
+        
+        <tr>
+            <th id="num-1">1</th> 
+            <th id="num-2">2</th> 
+            <th id="num-3">3</th> 
+            <th id="num-4">4</th> 
+            <th id="num-5">5</th> 
+            <th id="num-6">6</th> 
+            <th id="num-7">7</th> 
+            <th id="num-8">8</th> 
+            <th id="num-9">9</th> 
+            <th id="num-10">10</th> 
+        </tr>
+        
+        <tr>
+            <th id="num-11">11</th> 
+            <th id="num-12">12</th> 
+            <th id="num-13">13</th> 
+            <th id="num-14">14</th> 
+            <th id="num-15">15</th> 
+            <th id="num-16">16</th> 
+            <th id="num-17">17</th> 
+            <th id="num-18">18</th> 
+            <th id="num-19">19</th> 
+            <th id="num-20">20</th> 
+        </tr>
+        
+        <tr>
+            <th id="num-21">21</th> 
+            <th id="num-22">22</th> 
+            <th id="num-23">23</th> 
+            <th id="num-24">24</th> 
+            <th id="num-25">25</th> 
+            <th id="num-26">26</th> 
+            <th id="num-27">27</th> 
+            <th id="num-28">28</th> 
+            <th id="num-29">29</th> 
+            <th id="num-30">30</th> 
+        </tr>
+        
+        <tr>
+            <th id="num-31">31</th> 
+            <th id="num-32">32</th> 
+            <th id="num-33">33</th> 
+            <th id="num-34">34</th> 
+            <th id="num-35">35</th> 
+            <th id="num-36">36</th> 
+            <th id="num-37">37</th> 
+            <th id="num-38">38</th> 
+            <th id="num-39">39</th> 
+            <th id="num-40">40</th> 
+        </tr>
+        
+        <tr>
+            <th id="num-41">41</th> 
+            <th id="num-42">42</th> 
+            <th id="num-43">43</th> 
+            <th id="num-44">44</th> 
+            <th id="num-45">45</th> 
+            <th id="num-46">46</th> 
+            <th id="num-47">47</th> 
+            <th id="num-48">48</th> 
+            <th id="num-49">49</th> 
+            <th id="num-50">50</th> 
+        </tr>
+        
+        <tr>
+            <th id="num-51">51</th> 
+            <th id="num-52">52</th> 
+            <th id="num-53">53</th> 
+            <th id="num-54">54</th> 
+            <th id="num-55">55</th> 
+            <th id="num-56">56</th> 
+            <th id="num-57">57</th> 
+            <th id="num-58">58</th> 
+            <th id="num-59">59</th> 
+            <th id="num-60">60</th> 
+        </tr>
+        
+        <tr>
+            <th id="num-61">61</th> 
+            <th id="num-62">62</th> 
+            <th id="num-63">63</th> 
+            <th id="num-64">64</th> 
+            <th id="num-65">65</th> 
+            <th id="num-66">66</th> 
+            <th id="num-67">67</th> 
+            <th id="num-68">68</th> 
+            <th id="num-69">69</th> 
+            <th id="num-70">70</th> 
+        </tr>
+        
+        
+        <tr>
+            <th id="num-71">71</th> 
+            <th id="num-72">72</th> 
+            <th id="num-73">73</th> 
+            <th id="num-74">74</th> 
+            <th id="num-75">75</th> 
+        </tr>
+        
+    </table>
+    
+    <script src="js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    
+    <script>
+        $(function(){
+            var socket = io.connect();
+            
+            socket.on('connected', function(data){
+                numbers = data.numbers
+                if(numbers.length == 0) {
+                    document.getElementById("ticker").innerText = '00'
+                } else {
+                    document.getElementById("ticker").innerText = numbers[numbers.length - 1]
+                }
+                updateTable(data.numbers)
+            })
+            
+            socket.on('new number', function(data){
+                numbers = data.numbers
+                document.getElementById("ticker").innerText = numbers[numbers.length - 1]
+                updateTable(data.numbers)
+            })
+            
+            socket.on('reset table', function(data){
+                document.getElementById("ticker").innerText = '00';
+                clearTable()
+            })
+        });
+    </script>
+    
+</body>
+</html>
