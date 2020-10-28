@@ -1,63 +1,39 @@
 body {
     background: #131418;
     color: white;
+    font-family: 'Helvetica';
 }
+
 table {
-    border-spacing: 8px;
+    border-spacing: 5px;
     width: 100%;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-family: 'Helvetica', cursive;
-    letter-spacing: 5px;
+    max-width: 700px;
+    margin: 0 auto;
 }
+
 th {
-    padding: 10px 15px 10px 15px;
-    font-size: 4em;
+    font-size: 1em;
     color: #9ca0b177;
+    letter-spacing: 1px;
     border: 1px solid #9ca0b177;
 }
 
 .taken {
-    color: red;
-    border: 1px solid rgb(255, 255, 255);
+    color: black;
+    background: white;
 }
 
 .ticker {
     text-align: center;
     margin: 0 auto;
-    font-size: 10em;
-    letter-spacing: 10px;
-    font-family: 'Helvetica', cursive;
+    font-size: 3em;
+    letter-spacing: 5px;
 }
 
-@media screen and (max-width: 1100px) {
-    th {
-        padding: 0px;
-        font-size: 3em;
-        color: #9ca0b177;
-        letter-spacing: 2px;
-    }
-    .ticker {font-size: 7em}
+.history {
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1em;
+    letter-spacing: 5px;
 }
-
-@media screen and (max-width: 800px) {
-    th {
-        padding: 0px;
-        font-size: 2em;
-        color: #9ca0b177;
-        letter-spacing: 2px;
-    }
-    .ticker {font-size: 5em}
-}
-
-@media screen and (max-width: 600px) {
-    th {
-        padding: 0px;
-        font-size: 1.5em;
-        color: #9ca0b177;
-        letter-spacing: 1px;
-    }
-    .ticker {font-size: 3em}
-}
-
 

@@ -3,7 +3,7 @@ var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io').listen(server);
 const fs = require('fs');
-connections = [];
+var connections = []
 
 app.use(express.static(__dirname + '/assets'));
 
@@ -11,53 +11,42 @@ server.listen(process.env.PORT || 3000);
 console.log('Server running...');
 
 app.get('/', function(req, res){
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/public/index.html');
 });
 app.get('/kontrol', function(req, res){
-    res.sendFile(__dirname + '/kontrol.html');
+    res.sendFile(__dirname + '/public/kontrol.html');
 });
 
-// Tjek om der er gammel liste
-if (fs.existsSync('numbers.txt') && fs.readFileSync('numbers.txt', 'utf8') != '') {
-    var numbers = fs.readFileSync('numbers.txt', 'utf8').split(',');
-    console.log("Numbers loaded from numbers.txt")
-} else {
-    var numbers = []
-}
+
+
+const Bingo = require('./bingo');
+var game = new Bingo
 
 io.sockets.on('connection', function(socket){
+    // Connect
     connections.push(socket);
-    console.log('Connected (%s sockets connected)', connections.length);
-    io.sockets.emit('connected', {numbers})
-    
+    console.log('[+] Connected (%s total)', connections.length);
+    io.sockets.emit('connected', game.getData()) // Send client, board infomation
+
     // Disconnect
     socket.on('disconnect', function(data){
         connections.splice(connections.indexOf(socket), 1);
-        console.log('Disconnected (%s sockets connected)', connections.length);
+        console.log('[-] Disconnected (%s total)', connections.length);
     });
 
+    // Next number
     socket.on('next number', function(data){
-        // Tjek antallet af nummer i listen
-        if(numbers.length >= 75) {
+        if(game.hasNumbersLeft()) {
+            game.nextNumber()
+            io.sockets.emit('new number', game.getData())
+        } else {
             return false
-        }
-
-        // Tilfældigt tal som ikke findes i listen
-        var done = false
-        while (done == false) {
-            var randNum = Math.floor((Math.random() * 75) + 1);
-            if (!numbers.includes(randNum)) {
-                numbers.push(randNum)
-                io.sockets.emit('new number', {numbers})
-                fs.writeFileSync('numbers.txt', numbers);
-                done = true
-            }
-        }        
+        }       
     });
 
+    // Reset game
     socket.on('reset game', function(data){
-        numbers = []
-        fs.writeFileSync('numbers.txt', '');
-        io.sockets.emit('reset table', {numbers})
+        game = new Bingo
+        io.sockets.emit('reset table', game.getData())
     });
 });

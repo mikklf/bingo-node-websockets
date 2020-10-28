@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <title>Bingo - Kontrolpanel</title>
@@ -35,7 +35,7 @@
                 <p>
                     <div class="card text-white bg-dark ">
                         <div class="card-body">
-                            <h1 id="counter">00</h1>
+                            <h1 id="numbers_left">00</h1>
                             <p>numre tilbage</p>
                         </div>
                     </div>
@@ -61,8 +61,32 @@
                 </p>
             </div>
         </div>
+        
+        <div class="row">
+            <div class="col-6">
+                <p>
+                    <div class="card text-white bg-dark ">
+                        <div class="card-body">
+                            <p>Kaldte tal</p>
+                            <p id="called_numbers_list"></p>
+                        </div>
+                    </div>
+                </p>
+            </div>
+            <div class="col-6">
+                <p>
+                    <div class="card text-white bg-dark ">
+                        <div class="card-body">
+                            <p>Numre tilbage</p>
+                            <p id="numbers_left_list"></p>
+                        </div>
+                    </div>
+                </p>
+            </div>
+        </div>
     </div>
     
+    <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     
@@ -83,27 +107,15 @@
             })
             
             socket.on('connected', function(data){
-                numbers = data.numbers
-                document.getElementById("counter").innerText = 75 - numbers.length
-                
-                if(numbers.length == 0) {
-                    document.getElementById("ticker").innerText = '00'
-                } else {
-                    document.getElementById("ticker").innerText = numbers[numbers.length - 1]
-                }
+                updateAdminBoard(data)
             })
             
             socket.on('new number', function(data){
-                numbers = data.numbers
-                document.getElementById("counter").innerText = 75 - numbers.length
-                document.getElementById("ticker").innerText = numbers[numbers.length - 1]
+                updateAdminBoard(data)
             })
             
             socket.on('reset table', function(data){
-                numbers = data.numbers
-                console.log(numbers.length)
-                document.getElementById("counter").innerText = 75 - numbers.length
-                document.getElementById("ticker").innerText = '00'
+                updateAdminBoard(data)
             })
             
         });

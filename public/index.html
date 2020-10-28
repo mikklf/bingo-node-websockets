@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Staatliches&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <title>Bingo</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     
     <h1 class="ticker" id="ticker" style="margin: 0;">00</h1>
+    <h1 class="history" id="history" style="margin: 0;"></h1>
+    
     <table>
         
         <tr>
@@ -124,24 +127,15 @@
             var socket = io.connect();
             
             socket.on('connected', function(data){
-                numbers = data.numbers
-                if(numbers.length == 0) {
-                    document.getElementById("ticker").innerText = '00'
-                } else {
-                    document.getElementById("ticker").innerText = numbers[numbers.length - 1]
-                }
-                updateTable(data.numbers)
+                updateBoard(data)
             })
             
             socket.on('new number', function(data){
-                numbers = data.numbers
-                document.getElementById("ticker").innerText = numbers[numbers.length - 1]
-                updateTable(data.numbers)
+                updateBoard(data)
             })
             
             socket.on('reset table', function(data){
-                document.getElementById("ticker").innerText = '00';
-                clearTable()
+                updateBoard(data)
             })
         });
     </script>
