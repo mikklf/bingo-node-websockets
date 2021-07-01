@@ -8,7 +8,7 @@ var connections = []
 app.use(express.static(__dirname + '/assets'));
 
 server.listen(process.env.PORT || 3000);
-console.log('Server running...');
+console.log('Server running on port: ' + server.address().port);
 
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/public/index.html');
