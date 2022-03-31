@@ -16,11 +16,17 @@ th {
     color: #9ca0b177;
     letter-spacing: 1px;
     border: 1px solid #9ca0b177;
+    border-radius: 5px;
 }
 
 .taken {
-    color: black;
-    background: white;
+    color: white;
+    background: #267731;
+}
+
+.last {
+    color: white;
+    background: #772626;
 }
 
 .ticker {

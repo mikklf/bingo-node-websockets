@@ -4,6 +4,7 @@ function updateBoard(data) {
 
     // Reset Board
     $('.taken').removeClass('taken');
+    $('.last').removeClass('last');
 
     // Update Board
     for (let i = 0; i < calledNumbers.length; i++) {
@@ -11,6 +12,13 @@ function updateBoard(data) {
         var num = document.getElementById("num-" + element)
         num.classList.add("taken");
     } 
+
+    // Highlight last number
+    if(calledNumbers.length != 0) {
+    const lastnum = calledNumbers[calledNumbers.length-1]
+    var lastnumelm = document.getElementById("num-" + lastnum)
+    lastnumelm.classList.add("last");
+    }
 
     // Update Ticker
     if(calledNumbers.length == 0) {
