@@ -7,7 +7,7 @@ var connections = []
 
 app.use(express.static(__dirname + '/assets'));
 
-server.listen(process.env.PORT || 3000);
+server.listen(process.env.PORT || 8080);
 console.log('Server running on port: ' + server.address().port);
 
 app.get('/', function(req, res){
@@ -16,7 +16,6 @@ app.get('/', function(req, res){
 app.get('/kontrol', function(req, res){
     res.sendFile(__dirname + '/public/kontrol.html');
 });
-
 
 
 const Bingo = require('./bingo');
