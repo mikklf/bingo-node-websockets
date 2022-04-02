@@ -20,11 +20,19 @@ th {
 }
 
 .taken {
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
     color: white;
     background: #267731;
 }
 
 .last {
+    -moz-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
     color: white;
     background: #772626;
 }
