@@ -7,7 +7,7 @@ class Bingo {
     createNumbers() {
         // Generate list of 75 numbers
         let numbers = []
-        for (let i = 1; i <= 75; i++) {
+        for (let i = 1; i <= 90; i++) {
             numbers.push(i)
         }
         // Shuffle list
