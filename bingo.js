@@ -5,7 +5,7 @@ class Bingo {
     }
 
     createNumbers() {
-        // Generate list of 75 numbers
+        // Generate list of 90 numbers
         let numbers = []
         for (let i = 1; i <= 90; i++) {
             numbers.push(i)
