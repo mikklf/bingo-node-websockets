@@ -2,6 +2,7 @@ class Bingo {
     constructor() {
         this.numbers = this.createNumbers()
         this.calledNumbers = []
+        this.message = ""
     }
 
     createNumbers() {
@@ -43,8 +44,16 @@ class Bingo {
         return this.calledNumbers
     }
 
+    getMessage() {
+        return this.message
+    }
+
+    setMessage(msg) {
+        this.message = msg
+    }
+
     getData() {
-        return {numbers: this.numbers, calledNumbers: this.calledNumbers}
+        return {numbers: this.numbers, calledNumbers: this.calledNumbers, message: this.message}
     }
 
 }

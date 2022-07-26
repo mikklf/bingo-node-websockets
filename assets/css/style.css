@@ -19,6 +19,13 @@ th {
     border-radius: 5px;
 }
 
+.message {
+    color: rgb(154,205,50);
+    text-align: center;
+    margin: 0 auto;
+    font-size: 1em;
+}
+
 .taken {
     -moz-transition: all .2s ease-in;
     -o-transition: all .2s ease-in;

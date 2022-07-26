@@ -34,6 +34,8 @@ function updateBoard(data) {
     } else {
         document.getElementById("history").innerText = '.. ⮕ ..'
     }
+
+    document.getElementById("message").innerText = data.message
 }
 
 function updateAdminBoard(data) {
@@ -57,5 +59,7 @@ function updateAdminBoard(data) {
     // Update Numbers Left List. (Sorted order)
     var numbers_left_list = numbers.sort((a, b) => a - b).join('\n')
     document.getElementById("numbers_left_list").innerText = numbers_left_list
+
+    document.getElementById("messagebox").value = data.message
 
 }

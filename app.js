@@ -43,6 +43,11 @@ io.sockets.on('connection', function(socket){
         }       
     });
 
+    socket.on('new message', function(data){
+        game.setMessage(data)
+        io.sockets.emit('new message', game.getData())     
+    });
+
     // Reset game
     socket.on('reset game', function(data){
         game = new Bingo

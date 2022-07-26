@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no">
@@ -10,116 +11,147 @@
         body {
             font-family: 'Helvetica', cursive;
             background: #131418;
-            
+
             text-align: center;
         }
     </style>
 </head>
+
 <body>
-    
-    
-    
+
+
+
     <div class="container">
         <div class="row">
             <div class="col-6">
                 <p>
-                    <div class="card text-white bg-dark ">
-                        <div class="card-body">
-                            <p>Nummer</p>
-                            <h1 id="ticker">00</h1>
-                        </div>
+                <div class="card text-white bg-dark ">
+                    <div class="card-body">
+                        <p>Nummer</p>
+                        <h1 id="ticker">00</h1>
                     </div>
+                </div>
                 </p>
             </div>
             <div class="col-6">
                 <p>
-                    <div class="card text-white bg-dark ">
-                        <div class="card-body">
-                            <h1 id="numbers_left">00</h1>
-                            <p>numre tilbage</p>
-                        </div>
+                <div class="card text-white bg-dark ">
+                    <div class="card-body">
+                        <h1 id="numbers_left">00</h1>
+                        <p>numre tilbage</p>
                     </div>
+                </div>
                 </p>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    <div class="card text-white bg-dark ">
-                        <div class="card-body">
-                            <button type="button" class="btn btn-primary btn-block btn-lg" id="nextnum_button" style="line-height: 6">Næste nummer</button>
-                        </div>
+                <div class="card text-white bg-dark ">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-primary btn-block btn-lg" id="nextnum_button"
+                            style="line-height: 6">Næste nummer</button>
                     </div>
+                </div>
                 </p>
+                
                 <p>
-                    <div class="card text-white bg-dark ">
-                        <div class="card-body">
-                            <button type="button" class="btn btn-danger btn-block btn-lg" id="reset_button">Nulstil spillet</button>
+                <div class="card text-white bg-dark ">
+                    <div class="card-body">
+                        <button type="button" class="btn btn-danger btn-block btn-lg" id="reset_button">Nulstil
+                            spillet</button>
+                    </div>
+                </div>
+                </p>
+
+                <p>
+                <div class="card text-white bg-dark ">
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="messagebox">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="button" id="newmsg_button">Send</button>
+                            </div>
                         </div>
                     </div>
+                </div>
                 </p>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-6">
                 <p>
-                    <div class="card text-white bg-dark ">
-                        <div class="card-body">
-                            <p>Kaldte tal</p>
-                            <p id="called_numbers_list"></p>
-                        </div>
+                <div class="card text-white bg-dark ">
+                    <div class="card-body">
+                        <p>Kaldte tal</p>
+                        <p id="called_numbers_list"></p>
                     </div>
+                </div>
                 </p>
             </div>
             <div class="col-6">
                 <p>
-                    <div class="card text-white bg-dark ">
-                        <div class="card-body">
-                            <p>Numre tilbage</p>
-                            <p id="numbers_left_list"></p>
-                        </div>
+                <div class="card text-white bg-dark ">
+                    <div class="card-body">
+                        <p>Numre tilbage</p>
+                        <p id="numbers_left_list"></p>
                     </div>
+                </div>
                 </p>
             </div>
         </div>
     </div>
-    
+
     <script src="js/scripts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-    
+
     <script>
-        $(function(){
+        var input = document.getElementById("messagebox");
+        input.addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                document.getElementById("newmsg_button").click();
+            }
+        });
+
+
+
+        $(function () {
             var socket = io.connect();
-            
-            $("#nextnum_button").click(function(e){
+
+            $("#nextnum_button").click(function (e) {
                 socket.emit('next number')
             })
-            
-            $("#reset_button").click(function(e){
-                if(window.confirm('Er du siker?')) {
-                    if(window.confirm('Helt sikker?')) {
+
+            $("#reset_button").click(function (e) {
+                if (window.confirm('Er du siker?')) {
+                    if (window.confirm('Helt sikker?')) {
                         socket.emit('reset game')
                     }
                 }
             })
-            
-            socket.on('connected', function(data){
+
+            $("#newmsg_button").click(function (e) {
+                socket.emit('new message', document.getElementById("messagebox").value)
+            })
+
+            socket.on('connected', function (data) {
                 updateAdminBoard(data)
             })
-            
-            socket.on('new number', function(data){
+
+            socket.on('new number', function (data) {
                 updateAdminBoard(data)
             })
-            
-            socket.on('reset table', function(data){
+
+            socket.on('reset table', function (data) {
                 updateAdminBoard(data)
             })
-            
+
         });
     </script>
-    
+
 </body>
+
 </html>
